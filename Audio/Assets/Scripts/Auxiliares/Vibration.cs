@@ -1,220 +1,123 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿////////////////////////////////////////////////////////////////////////////////
+//  
+// @author Benoît Freslon @benoitfreslon
+// https://github.com/BenoitFreslon/Vibration
+// https://benoitfreslon.com
+//
+////////////////////////////////////////////////////////////////////////////////
+
 using UnityEngine;
+#if UNITY_IOS && !UNITY_EDITOR
+using System.Collections;
+using System.Runtime.InteropServices;
+#endif
 
-namespace Assets.Scripts.Auxiliar
+public static class Vibration
 {
-    //Android vibration for devices from api 26 or higher (ANDROID 8)
-    public class Vibration : MonoBehaviour
+#if UNITY_IOS 
+    [DllImport ( "__Internal" )]
+    private static extern bool _HasVibrator ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _Vibrate ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibratePop ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibratePeek ();
+
+    [DllImport ( "__Internal" )]
+    private static extern void _VibrateNope ();
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibratePop ()
     {
-
-        public static AndroidJavaClass unityPlayer;
-        public static AndroidJavaObject vibrator;
-        public static AndroidJavaObject currentActivity;
-        public static AndroidJavaClass vibrationEffectClass;
-        public static int defaultAmplitude;
-
-        /*
-         * "CreateOneShot": One time vibration
-         * "CreateWaveForm": Waveform vibration
-         * 
-         * Vibration Effects class (Android API level 26 or higher)
-         * Milliseconds: long: milliseconds to vibrate. Must be positive.
-         * Amplitude: int: Strenght of vibration. Between 1-255. (Or default value: -1)
-         * Timings: long: If submitting a array of amplitudes, then timings are the duration of each of these amplitudes in millis.
-         * Repeat: int: index of where to repeat, -1 for no repeat
-         /**/
-
-
-        void OnEnable()
-        {
-            if (!Application.isEditor)
-            {
-#if UNITY_ANDROID
-                unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-                vibrator = currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
-                if (getSDKInt() >= 26)
-                {
-                    vibrationEffectClass = new AndroidJavaClass("android.os.VibrationEffect");
-                    defaultAmplitude = vibrationEffectClass.GetStatic<int>("DEFAULT_AMPLITUDE");
-                }
-#endif
-            }
-        }
-
-        //Works on API > 25
-        public static void CreateOneShot(long milliseconds)
-        {
-
-            if (isAndroid())
-            {
-                //If Android 8.0 (API 26+) or never use the new vibrationeffects
-                if (getSDKInt() >= 26)
-                {
-                    try
-                    {
-                        CreateOneShot(milliseconds, defaultAmplitude);
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-                else
-                {
-                    Vibration1.Vibrate(milliseconds);
-                }
-            }
-            //If not android do simple solution for now
-            else
-            {
-                Handheld.Vibrate();
-            }
-        }
-
-        public static void CreateOneShot(long milliseconds, int amplitude)
-        {
-
-            if (isAndroid())
-            {
-                //If Android 8.0 (API 26+) or never use the new vibrationeffects
-                if (getSDKInt() >= 26)
-                {
-                    try
-                    {
-                        CreateVibrationEffect("createOneShot", new object[] { milliseconds, amplitude });
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-                else
-                {
-                    Vibration1.Vibrate(milliseconds);
-                }
-            }
-            //If not android do simple solution for now
-            else
-            {
-                Handheld.Vibrate();
-            }
-        }
-
-        //Works on API > 25
-        public static void CreateWaveform(long[] timings, int repeat)
-        {
-            //Amplitude array varies between no vibration and default_vibration up to the number of timings
-
-            if (isAndroid())
-            {
-                //If Android 8.0 (API 26+) or never use the new vibrationeffects
-                if (getSDKInt() >= 26)
-                {
-                    try
-                    {
-                        CreateVibrationEffect("createWaveform", new object[] { timings, repeat });
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-                else
-                {
-                    Vibration1.Vibrate(timings, repeat);
-                }
-            }
-            //If not android do simple solution for now
-            else
-            {
-                Handheld.Vibrate();
-            }
-        }
-
-        public static void CreateWaveform(long[] timings, int[] amplitudes, int repeat)
-        {
-            if (isAndroid())
-            {
-                //If Android 8.0 (API 26+) or never use the new vibrationeffects
-                if (getSDKInt() >= 26)
-                {
-                    try
-                    {
-                        CreateVibrationEffect("createWaveform", new object[] { timings, amplitudes, repeat });
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-                else
-                {
-                    Vibration1.Vibrate(timings, repeat);
-                }
-            }
-            //If not android do simple solution for now
-            else
-            {
-                Handheld.Vibrate();
-            }
-
-        }
-
-        //Handles all new vibration effects
-        private static void CreateVibrationEffect(string function, params object[] args)
-        {
-
-            AndroidJavaObject vibrationEffect = vibrationEffectClass.CallStatic<AndroidJavaObject>(function, args);
-            vibrator.Call("vibrate", vibrationEffect);
-        }
-
-        public static bool HasVibrator()
-        {
-            return vibrator.Call<bool>("hasVibrator");
-        }
-
-        public static bool HasAmplituideControl()
-        {
-            if (getSDKInt() >= 26)
-            {
-                return vibrator.Call<bool>("hasAmplitudeControl"); //API 26+ specific
-            }
-            else
-            {
-                return false; //If older than 26 then there is no amplitude control at all
-            }
-
-        }
-
-        public static void Cancel()
-        {
-            if (isAndroid())
-                vibrator.Call("cancel");
-        }
-
-        private static int getSDKInt()
-        {
-            if (isAndroid())
-            {
-                using (var version = new AndroidJavaClass("android.os.Build$VERSION"))
-                {
-                    return version.GetStatic<int>("SDK_INT");
-                }
-            }
-            else
-            {
-                return -1;
-            }
-
-        }
-
-        private static bool isAndroid()
-        {
-#if UNITY_ANDROID && !UNITY_EDITOR
-	    return true;
-#else
-            return false;
-#endif
-        }
+        _VibratePop ();
     }
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibratePeek ()
+    {
+        _VibratePeek ();
+    }
+
+    ///<summary>
+    ///Only on iOS
+    ///</summary>
+    public static void VibrateNope ()
+    {
+        _VibrateNope ();
+    }
+#endif
+
+#if UNITY_ANDROID 
+	public static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+	public static AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+	public static AndroidJavaObject vibrator =currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
+	public static AndroidJavaObject context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
+
+	///<summary>
+	/// Only on Android
+	/// https://developer.android.com/reference/android/os/Vibrator.html#vibrate(long)
+	///</summary>
+	public static void Vibrate(long milliseconds)
+	{
+		vibrator.Call("vibrate", milliseconds);
+	}
+
+	///<summary>
+	/// Only on Android
+	/// https://proandroiddev.com/using-vibrate-in-android-b0e3ef5d5e07
+	///</summary>
+	public static void Vibrate(long[] pattern, int repeat)
+	{
+		vibrator.Call("vibrate", pattern, repeat);
+	}
+
+    public static void CreateOneShot(long milliseconds)
+    {
+        vibrator.Call("vibrate", milliseconds);
+    }
+    ///<summary>
+    ///Only on Android
+    ///</summary>
+    public static void Cancel()
+	{
+		vibrator.Call("cancel");
+	}
+#endif
+
+	public static bool HasVibrator()
+	{
+#if UNITY_ANDROID 
+		AndroidJavaClass contextClass = new AndroidJavaClass("android.content.Context");
+		string Context_VIBRATOR_SERVICE = contextClass.GetStatic<string>("VIBRATOR_SERVICE");
+		AndroidJavaObject systemService = context.Call<AndroidJavaObject>("getSystemService", Context_VIBRATOR_SERVICE);
+		if (systemService.Call<bool>("hasVibrator"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+#elif UNITY_IOS 
+        return _HasVibrator ();
+#else
+		return false;
+#endif
+	}
+
+	public static void Vibrate()
+	{
+#if UNITY_EDITOR
+		Debug.Log("Bzzzt! Cool vibration!");
+#endif
+		Handheld.Vibrate();
+	}
 }
