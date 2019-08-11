@@ -1,8 +1,6 @@
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
-[Bb]uild/
-[Bb]uilds/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -34,3 +32,15 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+#FMOD banks (LFS proof)
+*.bank
+
+#FMOD Integration
+Assets/FMODStudioCache.asset
+Assets/StreamingAssets/*.bank
+fmod.log
+fmod_editor.log
+.cache/
+.user/
+.restore/
