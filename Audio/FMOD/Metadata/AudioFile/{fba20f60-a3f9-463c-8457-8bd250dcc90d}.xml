@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{fba20f60-a3f9-463c-8457-8bd250dcc90d}">
+        <property name="assetPath">
+            <value>Steve_Combs_-_08_-_Kerb_Stomp.mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>176.80799999999999</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{222c4da8-e78e-433f-8000-a7363550ee76}</destination>
+        </relationship>
+    </object>
+</objects>

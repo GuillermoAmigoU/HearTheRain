@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{850d156d-ddf2-40e7-90f7-d3e8076e4b24}">
+        <property name="assetPath">
+            <value>15 Crickets And Other Insects, Lassi.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>128.62902494331067</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{222c4da8-e78e-433f-8000-a7363550ee76}</destination>
+        </relationship>
+    </object>
+</objects>

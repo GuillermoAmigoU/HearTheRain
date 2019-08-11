@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{68aa8cfb-ff12-43c8-9269-8ac19aa454dc}">
+        <property name="assetPath">
+            <value>FX_WoodCreak_5_v1_MN.L.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>1</value>
+        </property>
+        <property name="length">
+            <value>3.1338958333333333</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{222c4da8-e78e-433f-8000-a7363550ee76}</destination>
+        </relationship>
+    </object>
+</objects>

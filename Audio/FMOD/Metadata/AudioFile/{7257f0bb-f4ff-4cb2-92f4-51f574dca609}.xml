@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{7257f0bb-f4ff-4cb2-92f4-51f574dca609}">
+        <property name="assetPath">
+            <value>Cuckoo Clock Ticking by Dean-Raule_DiArchangeli Id-462929.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>7.1691156462585033</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{222c4da8-e78e-433f-8000-a7363550ee76}</destination>
+        </relationship>
+    </object>
+</objects>

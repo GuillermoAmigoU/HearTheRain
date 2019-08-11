@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{fff41c49-b054-4cec-83f5-45788104d7d1}">
+        <property name="assetPath">
+            <value>E2.LOC.wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>53.439458333333334</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{222c4da8-e78e-433f-8000-a7363550ee76}</destination>
+        </relationship>
+    </object>
+</objects>

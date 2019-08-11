@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{38d7ed39-decf-441c-9449-1da085ba43bf}">
+        <property name="name">
+            <value>CassetteButton</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{15cd4788-5297-4940-9586-c3371e5c01a4}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{15cd4788-5297-4940-9586-c3371e5c01a4}">
+        <property name="maximum">
+            <value>6</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

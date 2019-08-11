@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{ad024766-5f00-4fed-b011-47f99056bd73}">
+        <property name="name">
+            <value>ShatteredGlass</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{53f0377c-4591-45e1-880e-8f0db46898cc}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{53f0377c-4591-45e1-880e-8f0db46898cc}">
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

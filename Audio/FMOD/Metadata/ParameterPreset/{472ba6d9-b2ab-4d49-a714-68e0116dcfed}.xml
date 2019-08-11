@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{472ba6d9-b2ab-4d49-a714-68e0116dcfed}">
+        <property name="name">
+            <value>LastDoor</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{1dcfcd17-a2bb-4a60-b26e-e990709b7c45}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{1dcfcd17-a2bb-4a60-b26e-e990709b7c45}">
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

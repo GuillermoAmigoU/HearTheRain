@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{c3ed7754-ff3d-4da7-9d09-57584b35be5c}">
+        <property name="name">
+            <value>Breaking</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{b54cc23e-411c-40cd-9b36-c4a66b564a9f}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{b54cc23e-411c-40cd-9b36-c4a66b564a9f}">
+        <property name="maximum">
+            <value>6</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

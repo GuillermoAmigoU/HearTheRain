@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="MixerGroup" id="{808c629a-a2ff-416e-98b7-038be9cece96}">
+        <property name="overridingInputFormat">
+            <value>5</value>
+        </property>
+        <property name="inputFormatOverridden">
+            <value>true</value>
+        </property>
+        <property name="name">
+            <value>Movement</value>
+        </property>
+        <relationship name="effectChain">
+            <destination>{c682095a-95dc-4e42-ad54-37e98822e543}</destination>
+        </relationship>
+        <relationship name="panner">
+            <destination>{8aedd5cf-fe82-4fde-8769-c663754ecb46}</destination>
+        </relationship>
+        <relationship name="output">
+            <destination>{6c464df0-ff61-4bba-98a4-bb05c68a12d6}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusEffectChain" id="{c682095a-95dc-4e42-ad54-37e98822e543}">
+        <relationship name="effects">
+            <destination>{4def634c-fd96-4b3a-8acc-398e40805c39}</destination>
+            <destination>{c0571be7-73b8-4745-bd2e-87fdccacdced}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusPanner" id="{8aedd5cf-fe82-4fde-8769-c663754ecb46}"/>
+    <object class="MixerBusFader" id="{4def634c-fd96-4b3a-8acc-398e40805c39}"/>
+    <object class="MixerSend" id="{c0571be7-73b8-4745-bd2e-87fdccacdced}">
+        <property name="level">
+            <value>0</value>
+        </property>
+        <property name="inputFormat">
+            <value>5</value>
+        </property>
+        <relationship name="mixerReturn">
+            <destination>{b36ea6b0-74bf-4c82-be46-669e13159c7c}</destination>
+        </relationship>
+    </object>
+</objects>

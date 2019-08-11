@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="EventFolder" id="{ed374778-385a-4469-ae59-6a8192809aad}">
+        <property name="name">
+            <value>SecretRoom_VaultDoor</value>
+        </property>
+        <relationship name="folder">
+            <destination>{0d6674f6-cdff-44ed-9b46-a38e0f88f57d}</destination>
+        </relationship>
+    </object>
+</objects>

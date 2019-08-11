@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{22fc31fb-af1c-413b-af57-3a693b4706ee}">
+        <property name="name">
+            <value>LockedDoor</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{d50576a2-cab3-4586-a347-f6922c60fd33}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{d50576a2-cab3-4586-a347-f6922c60fd33}">
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+    </object>
+</objects>

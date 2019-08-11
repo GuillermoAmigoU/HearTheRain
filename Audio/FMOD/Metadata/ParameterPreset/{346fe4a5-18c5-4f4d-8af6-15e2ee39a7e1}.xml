@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{346fe4a5-18c5-4f4d-8af6-15e2ee39a7e1}">
+        <property name="name">
+            <value>SelectSound</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{745cdd15-b47f-4e58-aeab-ac8e1b42d830}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{745cdd15-b47f-4e58-aeab-ac8e1b42d830}">
+        <property name="maximum">
+            <value>5</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+        <relationship name="modulators">
+            <destination>{c19f5be0-c736-401c-b658-199cfc9ecaa2}</destination>
+        </relationship>
+    </object>
+    <object class="RandomizerModulator" id="{c19f5be0-c736-401c-b658-199cfc9ecaa2}">
+        <property name="nameOfPropertyBeingModulated">
+            <value>cursorPosition</value>
+        </property>
+    </object>
+</objects>

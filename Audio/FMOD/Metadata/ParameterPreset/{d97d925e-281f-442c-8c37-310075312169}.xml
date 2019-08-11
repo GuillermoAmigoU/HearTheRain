@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="ParameterPreset" id="{d97d925e-281f-442c-8c37-310075312169}">
+        <property name="name">
+            <value>Panner</value>
+        </property>
+        <relationship name="folder">
+            <destination>{e601195d-4f62-425c-bb2b-e29ce1fb2fee}</destination>
+        </relationship>
+        <relationship name="parameter">
+            <destination>{33a5c859-7e50-4b9f-8305-c9aae75344b0}</destination>
+        </relationship>
+    </object>
+    <object class="GameParameter" id="{33a5c859-7e50-4b9f-8305-c9aae75344b0}">
+        <property name="minimum">
+            <value>-1</value>
+        </property>
+        <property name="initialValue">
+            <value>0</value>
+        </property>
+        <relationship name="modulators">
+            <destination>{ec91e477-9eb1-4551-8cda-1c63093c9451}</destination>
+        </relationship>
+    </object>
+    <object class="RandomizerModulator" id="{ec91e477-9eb1-4551-8cda-1c63093c9451}">
+        <property name="nameOfPropertyBeingModulated">
+            <value>cursorPosition</value>
+        </property>
+    </object>
+</objects>
