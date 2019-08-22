@@ -69,7 +69,7 @@ public class MovementButtons : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // if player is not moving (return value of IsMoving is false)
         if (!playerMove.IsMoving())

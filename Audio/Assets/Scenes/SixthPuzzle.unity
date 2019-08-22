@@ -615,6 +615,11 @@ PrefabInstance:
       propertyPath: VO_Phrase
       value: event:/VO/VO_Puzzle6
       objectReference: {fileID: 0}
+    - target: {fileID: 7253724745212555741, guid: a6073dc9f42163d4dba31dc563b6412d,
+        type: 3}
+      propertyPath: WaitForVO
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5226502201308011756, guid: a6073dc9f42163d4dba31dc563b6412d,
         type: 3}
       propertyPath: m_LocalPosition.x

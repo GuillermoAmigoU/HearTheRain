@@ -15,8 +15,6 @@ public class DialogrepeatAudioable : DialogVolume
     [SerializeField]
     bool locked = false;
 
-    [SerializeField]
-    bool repeatAudio = false;
 
     [SerializeField]
     [Range(1, 7)]

@@ -107,18 +107,18 @@ public class MenuBehaviour : MonoBehaviour
 
                 while (!asyncLoad.isDone)
                 {
-                    Debug.Log("Loading");
+                    //Debug.Log("Loading");
                     yield return null;
                 }
 
-                Debug.Log("Game Loaded");
+                //Debug.Log("Game Loaded");
+                StartCoroutine(LoadPlayer());
+                //GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
+                //Debug.Log("Player loaded.");
 
-                GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
-                Debug.Log("Player loaded.");
 
-
-                Debug.Log("Deleting this script when its done");
-                Destroy(this.gameObject, 2.0f);
+                //Debug.Log("Deleting this script when its done");
+                //Destroy(this.gameObject, 2.0f);
             }
         }
 
@@ -131,22 +131,29 @@ public class MenuBehaviour : MonoBehaviour
                 tutorialEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
                 once = true;
-                Debug.Log("Starting a new game");
+                //Debug.Log("Starting a new game");
                 AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMap", LoadSceneMode.Single);
 
                 while (!asyncLoad.isDone)
                 {
-                    Debug.Log("Loading");
+                    //Debug.Log("Loading");
                     yield return null;
                 }
-                Debug.Log("Game Loaded");
-                Debug.Log("Deleting this script when its done");
+                //Debug.Log("Game Loaded");
+                //Debug.Log("Deleting this script when its done");
                 Destroy(this.gameObject, 2.0f);
             }
         }
 
     }
+    private IEnumerator LoadPlayer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
+        Constantes.CAN_MOVE = true;
+        Destroy(this.gameObject, 1.5f);
 
+    }
     //We make a sound and wait certain ammount of seconds
     private IEnumerator SoundAndWait(float time, EventInstance audio)
     {
@@ -155,16 +162,19 @@ public class MenuBehaviour : MonoBehaviour
         audio.start();
 
         yield return new WaitForSeconds(time);
-        Debug.Log("Im finished. Now you can continue");
+        //Debug.Log("Im finished. Now you can continue");
         canContinue = true;
     }
 
     public void OnLoadGame()
     {
-        tutorialEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        introEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         if (!once)
         {
+            //Stop all sounds
+            Ambient.gameObject.SetActive(false);
+            tutorialEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            introEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
             once = true;
             //Go to the main map and load Player inside it.       
             StartCoroutine(SoundAndWait(5.0f, loadGameEvent));
@@ -227,7 +237,9 @@ public class MenuBehaviour : MonoBehaviour
 
             if (Input.touchCount == 1)
             {
-                OnTutorial();
+                //If we hit only with one and no other finger
+                if (!(Input.touchCount >= 2))
+                    OnTutorial();
             }
         }
 #endif
@@ -240,6 +252,7 @@ public class MenuBehaviour : MonoBehaviour
             if (Input.touchCount == 1)
             {
                 oncedebug = false;
+                Constantes.CAN_MOVE = true;
                 StartCoroutine(CheckContinue(1));
             }
         }

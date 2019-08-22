@@ -90,6 +90,7 @@ public class FirstPuzzle : MonoBehaviour
                 b.interactable = false;
             }
 
+            Constantes.CAN_MOVE = false;
             //Keys found
             winSoundEvent.start();
             FMODUnity.RuntimeManager.AttachInstanceToGameObject(winSoundEvent, player.transform, player.GetComponent<Rigidbody>());

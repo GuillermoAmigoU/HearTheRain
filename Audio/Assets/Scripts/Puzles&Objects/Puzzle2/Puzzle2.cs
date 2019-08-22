@@ -229,6 +229,7 @@ public class Puzzle2 : MonoBehaviour, ISimpleInputDraggable
                 win = true;
 
                 //Disable input until VO has stopped.
+                Constantes.CAN_MOVE = false;
                 StartCoroutine(WaitAudioAndFinish(Radio_Event));
             }
         }

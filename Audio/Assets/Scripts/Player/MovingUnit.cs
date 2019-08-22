@@ -39,6 +39,7 @@ public abstract class MovingUnit : MonoBehaviour
     WaitForSeconds esperaHitWal;
     public float waitHitWall = 0.3f;
 
+    public GameObject UI;
 
 #if UNITY_ANDROID
     [Header("Turning")]
@@ -114,9 +115,9 @@ public abstract class MovingUnit : MonoBehaviour
     [Header("SavePoint and DialogVolume Lists")]
 
     [SerializeField]
-    GameObject[] audioVolumes;
+    GameObject[] audioVolumes = null;
     [SerializeField]
-    GameObject[] savePoints;
+    GameObject[] savePoints = null;
 
     void Start()
     {
@@ -124,6 +125,8 @@ public abstract class MovingUnit : MonoBehaviour
         //Sound initialize
         //HitWallEvent = FMODUnity.RuntimeManager.CreateInstance(HitWallSound);
         SnapFingerEvent = FMODUnity.RuntimeManager.CreateInstance(SnapFingerSound);
+
+        UI = Constantes.MAIN_UI;
 
         //Hitwall and footstep sound events and parameters
         footstepSoundEvent = FMODUnity.RuntimeManager.CreateInstance(footstepSound);
@@ -606,6 +609,10 @@ public abstract class MovingUnit : MonoBehaviour
 
     public void LoadPlayer()
     {
+        UI.GetComponent<CompassScript>().initiate();
+        Awake();
+        Start();
+
         //To erase or disable past events or dialogs.
         Constantes.IS_PLAYER_LOADED = true;
 
@@ -633,14 +640,16 @@ public abstract class MovingUnit : MonoBehaviour
         Constantes.IS_PUZZLE6_SOLVED = data.puzlesSolved[5];
         Constantes.IS_PUZZLE7_SOLVED = data.puzlesSolved[6];
 
-        Debug.Log("Position: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2] + "     " + "Rotation: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2]);
-
+        //Debug.Log("Position: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2] + "     " + "Rotation: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2]);
+        
+        /*
         for (int i = 0; i < 7; i++)
         {
             Debug.Log("Puzle " + i + 1 + "solved? " + data.puzlesSolved[i]);
 
         }
         Debug.Log("Audios y saves: " + data.audios_Played + ", " + data.saved_Used);
+        */
 
         Constantes.AUDIOS_PLAYED = data.audios_Played;
         Constantes.SAVED_USED = data.saved_Used;
@@ -656,10 +665,8 @@ public abstract class MovingUnit : MonoBehaviour
             savePoints[i].SetActive(false);
         }
 
-
-
         Constantes.CAN_MOVE = true;
-        Constantes.DONT_SNAP = false;
+        //Constantes.DONT_SNAP = false;
         StartCoroutine(stopLoadingProcesses());
     }
 
@@ -667,6 +674,6 @@ public abstract class MovingUnit : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         Constantes.IS_PLAYER_LOADED = false;
-
+        Constantes.CAN_MOVE = true;
     }
 }

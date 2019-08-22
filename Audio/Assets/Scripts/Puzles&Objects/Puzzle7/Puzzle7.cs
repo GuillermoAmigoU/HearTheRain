@@ -34,11 +34,6 @@ public class Puzzle7 : MonoBehaviour, ISimpleInputDraggable
     float coolDown = 0.6f;
     float coolDownTimer = 0.0f;
 
-    private float time = 0.0f;
-
-    [SerializeField]
-    float TimeToPlayHint = 15.0f;
-
     [SerializeField]
     [FMODUnity.EventRef]
     public string Pista = "event:/Puzzle/Radio/RadioPuzzle";

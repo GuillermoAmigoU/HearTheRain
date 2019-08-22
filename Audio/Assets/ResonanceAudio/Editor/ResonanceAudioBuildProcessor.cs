@@ -25,6 +25,7 @@ using UnityEditor.Build.Reporting;
 #endif  // UNITY_2018_1_OR_NEWER
 
 // Notify developer if conflicting Google VR audio libraries are present.
+
 class ResonanceAudioBuildProcessor : IPreprocessBuild {
   private const string StripAssetPathPrefix = "Assets/";
 

@@ -40,13 +40,14 @@ public class Puzzle6 : MonoBehaviour
     //The player
     public GameObject Player;
 
+    public float timeToPlayFirstHint = 5.5f;
 
     //Solution from the player
 
     int[] possibleSolution = new int[4];
 
     //Solution
-    int[] solution = new int[4] { 1, 4, 3, 2 };
+    public int[] solution = new int[4] { 1, 3, 2, 4 };
 
     int buttonsPressed = 0;
 
@@ -169,7 +170,7 @@ public class Puzzle6 : MonoBehaviour
             if (firstTime)
             {
                 firstTime = false;
-                StartCoroutine(PlayVO(4.0f));
+                StartCoroutine(PlayVO(timeToPlayFirstHint));
                 phraseNotSound = true;
             }
 

@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 public static class Vibration
 {
-#if UNITY_IOS 
+#if UNITY_IOS
     [DllImport ( "__Internal" )]
     private static extern bool _HasVibrator ();
 
@@ -55,7 +55,7 @@ public static class Vibration
     }
 #endif
 
-#if UNITY_ANDROID 
+#if UNITY_ANDROID && !UNITY_EDITOR
 	public static AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 	public static AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 	public static AndroidJavaObject vibrator =currentActivity.Call<AndroidJavaObject>("getSystemService", "vibrator");
@@ -65,6 +65,7 @@ public static class Vibration
 	/// Only on Android
 	/// https://developer.android.com/reference/android/os/Vibrator.html#vibrate(long)
 	///</summary>
+
 	public static void Vibrate(long milliseconds)
 	{
 		vibrator.Call("vibrate", milliseconds);
@@ -74,6 +75,8 @@ public static class Vibration
 	/// Only on Android
 	/// https://proandroiddev.com/using-vibrate-in-android-b0e3ef5d5e07
 	///</summary>
+
+
 	public static void Vibrate(long[] pattern, int repeat)
 	{
 		vibrator.Call("vibrate", pattern, repeat);
@@ -92,9 +95,9 @@ public static class Vibration
 	}
 #endif
 
-	public static bool HasVibrator()
+    public static bool HasVibrator()
 	{
-#if UNITY_ANDROID 
+#if UNITY_ANDROID && !UNITY_EDITOR
 		AndroidJavaClass contextClass = new AndroidJavaClass("android.content.Context");
 		string Context_VIBRATOR_SERVICE = contextClass.GetStatic<string>("VIBRATOR_SERVICE");
 		AndroidJavaObject systemService = context.Call<AndroidJavaObject>("getSystemService", Context_VIBRATOR_SERVICE);
@@ -106,18 +109,26 @@ public static class Vibration
 		{
 			return false;
 		}
-#elif UNITY_IOS 
+#elif UNITY_IOS
         return _HasVibrator ();
 #else
-		return false;
+        return false;
 #endif
 	}
 
+#if UNITY_EDITOR
 	public static void Vibrate()
 	{
-#if UNITY_EDITOR
 		Debug.Log("Bzzzt! Cool vibration!");
-#endif
 		Handheld.Vibrate();
 	}
+#endif
+
+#if UNITY_EDITOR
+    public static void CreateOneShot(long milliseconds)
+    {
+        Debug.Log("Bzzzt! Cool vibration!");
+        Handheld.Vibrate();
+    }
+#endif
 }

@@ -14,7 +14,7 @@ public class GoToPoint : MonoBehaviour
 
     private NavMeshAgent agente;
     private bool inpath = false;
-    private int ActualPuzzle = 0;
+
 
     //[SerializeField]
     //GameObject[] puzzlesEnter = null;

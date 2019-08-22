@@ -263,6 +263,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9d5e43cd2dd2014bb71690dc6986284, type: 3}
+--- !u!1 &395182263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7943573854551400836, guid: f8d4414328b6cb249a0c590f5542e471,
+    type: 3}
+  m_PrefabInstance: {fileID: 7943573852586552453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &395182264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395182263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e05ae5dbaa9f8b4b9e7ad87d75a9b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WaitForVO: 18
+  time: 0.3
+  TimeToPlayHint: 120
+  Pista: event:/VO/VO_Hint_Puzzle5
+  CassetteRecordSound: event:/Puzzle/Bedroom_Cassette/Cassette try
+  CassetteButtonSound: event:/Puzzle/Bedroom_Cassette/Cassette_Buttons
+  Player: {fileID: 2114909628}
 --- !u!1001 &1756600696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -588,6 +613,42 @@ PrefabInstance:
     - target: {fileID: 1964854530, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
       propertyPath: TimeToPlayHint
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964854530, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007312788, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 395182264}
+    - target: {fileID: 1007312788, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnStop
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029273987, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 395182264}
+    - target: {fileID: 1029273987, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBackwards
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706924595, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 395182264}
+    - target: {fileID: 1706924595, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnForward
+      objectReference: {fileID: 0}
+    - target: {fileID: 1926634022, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 395182264}
+    - target: {fileID: 1926634022, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnPlay
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8d4414328b6cb249a0c590f5542e471, type: 3}

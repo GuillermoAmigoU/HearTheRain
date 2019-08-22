@@ -15,6 +15,7 @@ public class CompassScript : MonoBehaviour
     private static char south = 'S';
     private static char east = 'E';
 
+    [SerializeField]
     private Transform playerTransform;      // reference to player's transform component
 
     [FMODUnity.EventRef]
@@ -27,8 +28,8 @@ public class CompassScript : MonoBehaviour
     void Awake()
     {
         // init references
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
+        //playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = Constantes.MAIN_PLAYER.transform;
         northSounde = FMODUnity.RuntimeManager.CreateInstance(northSound);
 
     }
@@ -37,6 +38,11 @@ public class CompassScript : MonoBehaviour
     void Start()
     {
         SetCompassText();       // call function SetCompassText in this script
+    }
+
+    public void initiate()
+    {
+        Awake();
     }
 
     // function to start updating the compass (called from PlayerMove script)
@@ -85,8 +91,8 @@ public class CompassScript : MonoBehaviour
         //Sound play on north
         if (Constantes.GAME_ORIENTATION.Equals("N") && !Constantes.GAME_ORIENTATION.Equals("W") && !Constantes.GAME_ORIENTATION.Equals("E"))
         {
-    
-            FMODUnity.RuntimeManager.AttachInstanceToGameObject(northSounde, Constantes.MAIN_PLAYER.transform, GetComponent<Rigidbody>());
+            Debug.Log("Ding");
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(northSounde, Constantes.MAIN_PLAYER.transform, Constantes.MAIN_PLAYER.GetComponent<Rigidbody>());
             northSounde.start();
         }
         else

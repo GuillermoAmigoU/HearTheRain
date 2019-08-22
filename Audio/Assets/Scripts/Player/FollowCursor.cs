@@ -7,8 +7,7 @@ public class FollowCursor : MonoBehaviour
 {
     [SerializeField]
     GameObject CursorClickParticle = null;
-    [SerializeField]
-    float speed = 8.0f;
+
     [SerializeField]
     float distanceFromCamera = 0.2f;
     bool showTrail = false;

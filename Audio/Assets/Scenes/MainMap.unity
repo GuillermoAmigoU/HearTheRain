@@ -2482,6 +2482,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1966933973631606, guid: b12d5c563fe47044885da185f29bfbae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224255897743529530, guid: b12d5c563fe47044885da185f29bfbae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2576,6 +2580,11 @@ PrefabInstance:
         type: 3}
       propertyPath: northSound
       value: event:/Misc/Cling
+      objectReference: {fileID: 0}
+    - target: {fileID: 114938756171384816, guid: b12d5c563fe47044885da185f29bfbae,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1886715041143564, guid: b12d5c563fe47044885da185f29bfbae, type: 3}
       propertyPath: m_IsActive
@@ -3031,24 +3040,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 425314620}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &428215856 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1806789927539062, guid: 9f0f14b916389bc49b6f233a6d099378,
-    type: 3}
-  m_PrefabInstance: {fileID: 875774623}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &428215860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428215856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfdc601ea1a066c48b5fa43eb71706c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &438424605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4755967148847994, guid: 7c85eb20648125647ad0c5bd92d7191d,
@@ -11932,6 +11923,11 @@ PrefabInstance:
       propertyPath: audioVolumes.Array.data[15]
       value: 
       objectReference: {fileID: 1568126760}
+    - target: {fileID: 114700256446255716, guid: 30e2b0cdca30c6148a3e851d843cdadb,
+        type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 260694169}
     - target: {fileID: 4124855142844670, guid: 30e2b0cdca30c6148a3e851d843cdadb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20
@@ -15968,7 +15964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568367590105964, guid: 9f0f14b916389bc49b6f233a6d099378, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.14
+      value: 2.52
       objectReference: {fileID: 0}
     - target: {fileID: 4568367590105964, guid: 9f0f14b916389bc49b6f233a6d099378, type: 3}
       propertyPath: m_LocalPosition.y
@@ -15976,7 +15972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568367590105964, guid: 9f0f14b916389bc49b6f233a6d099378, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.4
+      value: 3.83
       objectReference: {fileID: 0}
     - target: {fileID: 4568367590105964, guid: 9f0f14b916389bc49b6f233a6d099378, type: 3}
       propertyPath: m_LocalRotation.x
@@ -16027,22 +16023,22 @@ PrefabInstance:
     - target: {fileID: 65751799010515226, guid: 9f0f14b916389bc49b6f233a6d099378,
         type: 3}
       propertyPath: m_Size.x
-      value: 1.4097813
+      value: 1.5710207
       objectReference: {fileID: 0}
     - target: {fileID: 65751799010515226, guid: 9f0f14b916389bc49b6f233a6d099378,
         type: 3}
       propertyPath: m_Center.x
-      value: -0.53046346
+      value: -0.44984397
       objectReference: {fileID: 0}
     - target: {fileID: 65751799010515226, guid: 9f0f14b916389bc49b6f233a6d099378,
         type: 3}
       propertyPath: m_Size.z
-      value: 1.2570858
+      value: 1.3787937
       objectReference: {fileID: 0}
     - target: {fileID: 65751799010515226, guid: 9f0f14b916389bc49b6f233a6d099378,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.4632597
+      value: -0.40240523
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f0f14b916389bc49b6f233a6d099378, type: 3}
@@ -19485,6 +19481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzleEnter_LivingRoom_Radio
       objectReference: {fileID: 0}
+    - target: {fileID: 1024137040, guid: 9a6820c30669a1c42a9406e582a792f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1024137041, guid: 9a6820c30669a1c42a9406e582a792f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.1199985
@@ -19532,6 +19532,10 @@ PrefabInstance:
     - target: {fileID: 1024137042, guid: 9a6820c30669a1c42a9406e582a792f9, type: 3}
       propertyPath: OverrideMaxDistance
       value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024137042, guid: 9a6820c30669a1c42a9406e582a792f9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a6820c30669a1c42a9406e582a792f9, type: 3}

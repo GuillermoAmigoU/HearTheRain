@@ -7,31 +7,45 @@ using UnityEngine;
 
 public class Puzzle5 : MonoBehaviour
 {
+
     float elapsed = 0f;
     bool win = false;
 
+    //To trigger the exit just once.
+    bool once;
+
+    //Time to call Exitpuzzle (wait for VO to exit puzzle)
+    public float WaitForVO = 18.0f;
+
+    //Time to Release the button
+    public float time = 0.3f;
 
     [SerializeField]
-    float TimeToPlayHint = 15.0f;
+    float TimeToPlayHint = 120.0f;
+
+    int puzzleState = 0;
 
     [SerializeField]
     [FMODUnity.EventRef]
-    public string Pista = "event:/Puzzle/Radio/RadioPuzzle";
+    public string Pista = "event:/VO/VO_Hint_Puzzle5";
     EventInstance Pista_Event;
 
     [FMODUnity.EventRef]
-    public string CassetteRecordSound = "event:/Puzzle/Living Room/WindowPuzzle";
+    public string CassetteRecordSound = "event:/Puzzle/Bedroom_Cassette/Cassette try";
     EventInstance CassetteRecordEvent;
 
     [FMODUnity.EventRef]
-    public string CassetteButtonSound = "event:/Puzzle/Living Room/WindowPuzzle";
+    public string CassetteButtonSound = "event:/Puzzle/Bedroom_Cassette/Cassette_Buttons";
     EventInstance CassetteButtondEvent;
 
-    //1-2 Play, 2.1-3-Rewind, 3.1-4 Fast Forward
-    ParameterInstance CassetteState;
+    //0-Rewind, 1 Fast Forward
+    ParameterInstance rewindOrForward;
     //0-1 Play, 1-2 Rewind, 2-3 Fast Forward, 3-4 Stop, 4-5 Release button, 5-6 Already pressed button
     ParameterInstance CassetteButton;
-
+    //When pressed play
+    ParameterInstance Solution;
+    //When repeated
+    ParameterInstance Repeated;
     //The player
     public GameObject Player;
 
@@ -42,18 +56,6 @@ public class Puzzle5 : MonoBehaviour
     bool forwardPressed;
     bool playing = false;
 
-    //Puzzle State, 0 is the answer.
-    int puzzleState = 0;
-
-    //To trigger the exit just once.
-    bool once;
-
-    //Time to call Exitpuzzle (wait for VO to exit puzzle)
-    public float WaitForVO = 17.0f;
-
-    //Time to Release the button
-    public float time = 0.25f;
-
     // Use this for initialization
     void Start()
     {
@@ -62,21 +64,21 @@ public class Puzzle5 : MonoBehaviour
         Pista_Event = RuntimeManager.CreateInstance(Pista);
 
         //we get the parameters from fmod to use them here
-        CassetteRecordEvent.getParameter("CassetteState", out CassetteState);
+        CassetteRecordEvent.getParameter("Button", out rewindOrForward);
         CassetteButtondEvent.getParameter("CassetteButton", out CassetteButton);
+        CassetteRecordEvent.getParameter("Solution", out Solution);
+        CassetteRecordEvent.getParameter("Repeat", out Repeated);
 
         RuntimeManager.AttachInstanceToGameObject(CassetteRecordEvent, Player.transform, Player.transform.GetComponent<Rigidbody>());
         RuntimeManager.AttachInstanceToGameObject(CassetteButtondEvent, Player.transform, Player.transform.GetComponent<Rigidbody>());
         RuntimeManager.AttachInstanceToGameObject(Pista_Event, Player.transform, Player.transform.GetComponent<Rigidbody>());
 
 
-        selectRandom();
-        Debug.Log(puzzleState);
-
         Constantes.CAN_MOVE = true;
         //First time hint
         StartCoroutine(PlayPista(0.0f));
     }
+
     void Update()
     {
         //First clue
@@ -91,42 +93,8 @@ public class Puzzle5 : MonoBehaviour
             }
 
         }
-    }
 
-    //Select a Random solution
-    void selectRandom()
-    {
-        while (puzzleState == 0)
-        {
-            puzzleState = (int)Random.Range(-1.0f, 1.0f);
-        }
-    }
 
-    //if the button is already pressed, we play certain sound
-    private void AlreadyPressed()
-    {
-        CassetteButton.setValue(5.5f);
-        CassetteButtondEvent.start();
-    }
-
-    //When released, we wait a moment to release the other button
-    private IEnumerator OnRelease()
-    {
-        yield return new WaitForSeconds(time);
-        playing = false;
-        CassetteButton.setValue(4.5f);
-        CassetteButtondEvent.start();
-    }
-
-    //When winning
-    IEnumerator WinPuzzleCassette()
-    {
-        win = true;
-        Pista_Event.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        Constantes.CAN_MOVE = false;
-        yield return new WaitForSeconds(WaitForVO);
-        Player.GetComponent<PuzzleController_Puzzle5>().WinPuzzle();
-        once = true;
     }
 
     IEnumerator PlayPista(float time)
@@ -135,7 +103,9 @@ public class Puzzle5 : MonoBehaviour
         Pista_Event.start();
     }
 
-    //Play button
+
+
+
     public void OnPlay()
     {
         //If the button has already been pressed.
@@ -156,124 +126,61 @@ public class Puzzle5 : MonoBehaviour
             rewindPressed = false;
             forwardPressed = false;
             stopPressed = false;
+            playPressed = true;
 
-            //We press the Play button
             CassetteButton.setValue(0.5f);
             CassetteButtondEvent.start();
-            playPressed = true;
-            Vibration.CreateOneShot(50);
-            playing = true;
+            Solution.setValue(1.0f);
 
+            //Get info: Is it paused, did it start the first time?
+            bool paused;
+            CassetteRecordEvent.getPaused(out paused);
+            PLAYBACK_STATE state;
+            CassetteRecordEvent.getPlaybackState(out state);
 
-            //Play the record
-            //Play the record if correct
-            if (puzzleState == 0 && !once)
-            {
-                CassetteRecordEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                CassetteState.setValue(1.5f);
+            //If paused, unpause, if didnt start, start.
+            if (state != PLAYBACK_STATE.PLAYING)
                 CassetteRecordEvent.start();
-                Vibration.CreateOneShot(75);
 
+            //Seconds range to win
+            int pos;
+            CassetteRecordEvent.getTimelinePosition(out pos);
+            if (pos > 4000 && pos < 6500)
+            {
+                Vibration.CreateOneShot(75);
                 StartCoroutine(WinPuzzleCassette());
             }
-            else
-            {
-                //Sound not working
-                CassetteRecordEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                CassetteState.setValue(4.5f);
-                CassetteRecordEvent.start();
-            }
         }
-
-
     }
 
-    //Rewind button
-    public void onRewind()
+    //When winning
+    IEnumerator WinPuzzleCassette()
     {
-        if (rewindPressed)
-        {
-            AlreadyPressed();
-            Vibration.CreateOneShot(25);
-            playing = false;
-
-        }
-        else
-        {
-            //If some button was pressed before, we release that button.
-            if (playPressed || forwardPressed || stopPressed)
-                StartCoroutine(OnRelease());
-
-            //We set all buttons to released
-            playPressed = false;
-            forwardPressed = false;
-            stopPressed = false;
-
-            //We press the button
-            CassetteButton.setValue(1.5f);
-            CassetteButtondEvent.start();
-            rewindPressed = true;
-            Vibration.CreateOneShot(50);
-            playing = true;
-
-            CassetteRecordEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-
-            //If we can rewind
-            if (puzzleState != -1)
-            {
-                puzzleState--;
-                //Play the record
-                CassetteState.setValue(2.5f);
-                CassetteRecordEvent.start();
-
-            }
-
-        }
+        win = true;
+        Constantes.CAN_MOVE = false;
+        yield return new WaitForSeconds(WaitForVO);
+        Player.GetComponent<PuzzleController_Puzzle5>().WinPuzzle();
+        once = true;
+        Pista_Event.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
-    //Forward button
-    public void OnForward()
+    //if the button is already pressed, we play certain sound
+    private void AlreadyPressed()
     {
-        if (forwardPressed)
-        {
-            AlreadyPressed();
-            Vibration.CreateOneShot(25);
-            playing = false;
-
-        }
-        else
-        {
-            //If some button was pressed before, we release that button.
-            if (playPressed || rewindPressed || stopPressed)
-                StartCoroutine(OnRelease());
-            //We set all buttons to released
-            rewindPressed = false;
-            playPressed = false;
-            stopPressed = false;
-
-            //We press the button
-            CassetteButton.setValue(2.5f);
-            CassetteButtondEvent.start();
-            forwardPressed = true;
-            Vibration.CreateOneShot(50);
-            playing = true;
-
-
-            CassetteRecordEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-
-            //If the cassette isn't forwarded
-            if (puzzleState != 1)
-            {
-                puzzleState++;
-                CassetteState.setValue(3.5f);
-                CassetteRecordEvent.start();
-            }
-
-
-        }
+        CassetteButton.setValue(5.5f);
+        CassetteButtondEvent.start();
     }
 
-    //Stop button
+    //When released, we wait a moment to release the other button
+    private IEnumerator OnRelease()
+    {
+        yield return new WaitForSeconds(time);
+        playing = false;
+        CassetteButton.setValue(4.5f);
+        CassetteButtondEvent.start();
+        //CassetteButtondEvent.setPaused(false);
+    }
+
     public void OnStop()
     {
         if (stopPressed)
@@ -292,17 +199,112 @@ public class Puzzle5 : MonoBehaviour
             rewindPressed = false;
             playPressed = false;
             forwardPressed = false;
+            stopPressed = true;
 
-            //We press the button
             CassetteButton.setValue(3.5f);
             CassetteButtondEvent.start();
-            stopPressed = true;
-            Vibration.CreateOneShot(50);
-            playing = true;
 
-
-            //Stop the record
             CassetteRecordEvent.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            Solution.setValue(0.0f);
         }
     }
+
+    public void OnForward()
+    {
+        if (forwardPressed)
+        {
+            AlreadyPressed();
+            Vibration.CreateOneShot(25);
+            playing = false;
+
+        }
+        else
+        {
+            //If some button was pressed before, we release that button.
+            if (playPressed || rewindPressed || stopPressed)
+                StartCoroutine(OnRelease());
+            //We set all buttons to released
+            rewindPressed = false;
+            playPressed = false;
+            stopPressed = false;
+            forwardPressed = true;
+
+            if (puzzleState != 1)
+            {
+                puzzleState = 1;
+                CassetteButton.setValue(2.5f);
+                CassetteButtondEvent.start();
+
+                rewindOrForward.setValue(1.0f);
+                Solution.setValue(0.0f);
+
+                Repeated.setValue(0.0f);
+
+
+                CassetteRecordEvent.start();
+            }
+            else if(puzzleState == 1)
+            {
+                CassetteButton.setValue(2.5f);
+                CassetteButtondEvent.start();
+
+                Repeated.setValue(1.0f);
+
+
+                rewindOrForward.setValue(1.0f);
+                Solution.setValue(0.0f);
+                CassetteRecordEvent.start();
+            }
+        }
+
+    }
+
+    public void OnBackwards()
+    {
+        if (rewindPressed)
+        {
+            AlreadyPressed();
+            Vibration.CreateOneShot(25);
+            playing = false;
+
+        }
+        else
+        {
+            //If some button was pressed before, we release that button.
+            if (playPressed || forwardPressed || stopPressed)
+                StartCoroutine(OnRelease());
+
+            //We set all buttons to released
+            playPressed = false;
+            forwardPressed = false;
+            stopPressed = false;
+            rewindPressed = true;
+
+            if (puzzleState != -1)
+            {
+                puzzleState = -1;
+                CassetteButton.setValue(1.5f);
+                CassetteButtondEvent.start();
+
+                rewindOrForward.setValue(0.0f);
+                Solution.setValue(0.0f);
+
+                Repeated.setValue(0.0f);
+
+                CassetteRecordEvent.start();
+            }
+            else if(puzzleState == -1)
+            {
+                CassetteButton.setValue(1.5f);
+                CassetteButtondEvent.start();
+                rewindOrForward.setValue(0.0f);
+                Solution.setValue(0.0f);
+
+                Repeated.setValue(1.0f);
+                CassetteRecordEvent.start();
+
+            }
+        }
+    }
+
 }
