@@ -29,7 +29,7 @@ public class DialogVolume : MonoBehaviour
     float timeToWaitBeforeStarting = 0.0f;
 
     bool once = false;
-
+    bool destruironce = false;
 
 
     private void Start()
@@ -46,7 +46,12 @@ public class DialogVolume : MonoBehaviour
         {
             Constantes.CAN_MOVE = false;
             Constantes.DONT_SNAP = true;
-            StartCoroutine(StartSound());
+
+            if (!destruironce)
+            {
+                destruironce = true;
+                StartCoroutine(StartSound());
+            }
         }
     }
 
@@ -58,14 +63,15 @@ public class DialogVolume : MonoBehaviour
 
         if (!repeat)
         {
-            Constantes.AUDIOS_PLAYED++;
-            destruir();
+            Destruir();
         }
     }
 
-    private void destruir()
+    public void Destruir()
     {
         Destroy(this.gameObject);
+        Constantes.AUDIOS_PLAYED++;
+        //Debug.Log(Constantes.AUDIOS_PLAYED);
     }
 
     void Update()

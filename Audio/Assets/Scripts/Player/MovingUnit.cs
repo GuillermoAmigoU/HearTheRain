@@ -126,7 +126,9 @@ public abstract class MovingUnit : MonoBehaviour
         //HitWallEvent = FMODUnity.RuntimeManager.CreateInstance(HitWallSound);
         SnapFingerEvent = FMODUnity.RuntimeManager.CreateInstance(SnapFingerSound);
 
-        UI = Constantes.MAIN_UI;
+        //GameObject.FindGameObjectWithTag("GameUI")
+        UI = GameObject.FindGameObjectWithTag("GameUI");
+        Constantes.MAIN_UI = UI;
 
         //Hitwall and footstep sound events and parameters
         footstepSoundEvent = FMODUnity.RuntimeManager.CreateInstance(footstepSound);
@@ -193,7 +195,7 @@ public abstract class MovingUnit : MonoBehaviour
     // Use this for initialization
     public void Reload()
     {
-        Debug.Log("Me he reactivado");
+        //Debug.Log("Me he reactivado");
         invMoveTime = 1f / moveTime;        // calculate invMoveTime
 
         StopAllCoroutines();
@@ -609,47 +611,15 @@ public abstract class MovingUnit : MonoBehaviour
 
     public void LoadPlayer()
     {
-        UI.GetComponent<CompassScript>().initiate();
-        Awake();
-        Start();
+        
+        //UI.GetComponent<CompassScript>().initiate();
+        //Awake();
+        //Start();
 
         //To erase or disable past events or dialogs.
         Constantes.IS_PLAYER_LOADED = true;
 
         PlayerData data = SaveSystem.LoadPlayer();
-
-        //We update player position to match the saved one.
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        transform.position = position;
-
-        Vector3 rotation;
-        rotation.x = data.rotation[0];
-        rotation.y = data.rotation[1];
-        rotation.z = data.rotation[2];
-        transform.rotation = Quaternion.Euler(rotation);
-
-        //we update the game's data  with the one saved
-        Constantes.IS_PUZZLE1_SOLVED = data.puzlesSolved[0];
-        Constantes.IS_PUZZLE2_SOLVED = data.puzlesSolved[1];
-        Constantes.IS_PUZZLE3_SOLVED = data.puzlesSolved[2];
-        Constantes.IS_PUZZLE4_SOLVED = data.puzlesSolved[3];
-        Constantes.IS_PUZZLE5_SOLVED = data.puzlesSolved[4];
-        Constantes.IS_PUZZLE6_SOLVED = data.puzlesSolved[5];
-        Constantes.IS_PUZZLE7_SOLVED = data.puzlesSolved[6];
-
-        //Debug.Log("Position: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2] + "     " + "Rotation: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2]);
-        
-        /*
-        for (int i = 0; i < 7; i++)
-        {
-            Debug.Log("Puzle " + i + 1 + "solved? " + data.puzlesSolved[i]);
-
-        }
-        Debug.Log("Audios y saves: " + data.audios_Played + ", " + data.saved_Used);
-        */
 
         Constantes.AUDIOS_PLAYED = data.audios_Played;
         Constantes.SAVED_USED = data.saved_Used;
@@ -665,9 +635,62 @@ public abstract class MovingUnit : MonoBehaviour
             savePoints[i].SetActive(false);
         }
 
-        Constantes.CAN_MOVE = true;
+
+        //We update player position to match the saved one.
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        transform.position = position;
+
+        Vector3 rotation;
+
+        //If error rounding data, reset to 0,0,0
+        if(data.rotation[0] != 0 || data.rotation[0] != 90 || data.rotation[0] != 360 || data.rotation[0] != 270)
+        {
+            data.rotation[0] = 0;
+        }
+        if (data.rotation[1] != 0 || data.rotation[1] != 90 || data.rotation[1] != 360 || data.rotation[1] != 270)
+        {
+            data.rotation[1] = 0;
+        }
+        if (data.rotation[2] != 0 || data.rotation[2] != 90 || data.rotation[2] != 360 || data.rotation[2] != 270)
+        {
+            data.rotation[2] = 0;
+        }
+
+        //Debug.Log("Rotacion: " + data.rotation[0] +" , "+ data.rotation[1] + " , " + data.rotation[2]);
+
+        rotation.x = data.rotation[0];
+        rotation.y = data.rotation[1];
+        rotation.z = data.rotation[2];
+        transform.rotation = Quaternion.Euler(rotation);
+
+        //we update the game's data  with the one saved
+        Constantes.IS_PUZZLE1_SOLVED = data.puzlesSolved[0];
+        Constantes.IS_PUZZLE2_SOLVED = data.puzlesSolved[1];
+        Constantes.IS_PUZZLE3_SOLVED = data.puzlesSolved[2];
+        Constantes.IS_PUZZLE4_SOLVED = data.puzlesSolved[3];
+        Constantes.IS_PUZZLE5_SOLVED = data.puzlesSolved[4];
+        Constantes.IS_PUZZLE6_SOLVED = data.puzlesSolved[5];
+        Constantes.IS_PUZZLE7_SOLVED = data.puzlesSolved[6];
+
+        
+        //Debug.Log("Position: " + data.position[0] + ", " + data.position[1] + ", " + data.position[2] + "     " + "Rotation: " + data.rotation[0] + ", " + data.rotation[1] + ", " + data.rotation[2]);     
+        /*
+        for (int i = 0; i < 7; i++)
+        {
+            Debug.Log("Puzle " + i + 1 + "solved? " + data.puzlesSolved[i]);
+        }
+        Debug.Log("Audios y saves: " + data.audios_Played + ", " + data.saved_Used);
+        */
+
+
+        //Constantes.CAN_MOVE = true;
         //Constantes.DONT_SNAP = false;
+
         StartCoroutine(stopLoadingProcesses());
+        
     }
 
     IEnumerator stopLoadingProcesses()

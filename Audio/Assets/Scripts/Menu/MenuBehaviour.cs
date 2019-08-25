@@ -112,13 +112,14 @@ public class MenuBehaviour : MonoBehaviour
                 }
 
                 //Debug.Log("Game Loaded");
+                GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = false;
+                GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
                 StartCoroutine(LoadPlayer());
-                //GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
                 //Debug.Log("Player loaded.");
 
 
                 //Debug.Log("Deleting this script when its done");
-                //Destroy(this.gameObject, 2.0f);
+                Destroy(this.gameObject, 2.0f);
             }
         }
 
@@ -149,8 +150,10 @@ public class MenuBehaviour : MonoBehaviour
     private IEnumerator LoadPlayer()
     {
         yield return new WaitForSeconds(0.5f);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<MovingUnit>().LoadPlayer();
         Constantes.CAN_MOVE = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<BoxCollider>().enabled = true;
+
         Destroy(this.gameObject, 1.5f);
 
     }

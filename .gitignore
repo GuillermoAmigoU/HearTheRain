@@ -36,6 +36,9 @@ sysinfo.txt
 #FMOD banks (LFS proof)
 *.bank
 
+#Unity Keystore
+*.keystore
+
 #FMOD Integration
 Assets/FMODStudioCache.asset
 Assets/StreamingAssets/*.bank

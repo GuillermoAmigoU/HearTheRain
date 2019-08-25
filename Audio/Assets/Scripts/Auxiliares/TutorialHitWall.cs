@@ -52,11 +52,12 @@ public class TutorialHitWall : MonoBehaviour
         Constantes.MAIN_PLAYER.GetComponent<MovingUnit>().getHitWall().setParameterValue(Constantes.WALL_TUTORIAL1, 0.0f);
         Constantes.MAIN_PLAYER.GetComponent<MovingUnit>().getHitWall().setParameterValue(Constantes.WALL_TUTORIAL2, 0.0f);
         Constantes.AUDIOS_PLAYED++;
-        destruir();
+        Destruir();
+        //Debug.Log(Constantes.AUDIOS_PLAYED);
 
     }
 
-    private void destruir()
+    private void Destruir()
     {
         Destroy(this.gameObject);
     }
@@ -70,15 +71,17 @@ public class TutorialHitWall : MonoBehaviour
 
         }
 
+        /*
         if (Constantes.IS_PLAYER_LOADED)
         {
 
             //When we laod the game, we erase the volumes whoch were reproduced before
             if (Constantes.IS_PUZZLE1_SOLVED)
             {
-                    destruir();
+                    Destruir();
             }
         }
+        */
 
     }
 }

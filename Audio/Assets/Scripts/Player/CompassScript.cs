@@ -58,6 +58,7 @@ public class CompassScript : MonoBehaviour
     {
         // define the current rotation of the player and define variable  compassChar
         int playerRotation = Mathf.RoundToInt(playerTransform.eulerAngles.y);
+        //Debug.Log("Rotacion del jugador: "+playerRotation);
         char compassChar = '-';
 
         // switch case to define the rotation in Y-axis (0, 90, 180 or 270) and appropriate cardinal heading (north, west, south or east)
@@ -91,7 +92,6 @@ public class CompassScript : MonoBehaviour
         //Sound play on north
         if (Constantes.GAME_ORIENTATION.Equals("N") && !Constantes.GAME_ORIENTATION.Equals("W") && !Constantes.GAME_ORIENTATION.Equals("E"))
         {
-            Debug.Log("Ding");
             FMODUnity.RuntimeManager.AttachInstanceToGameObject(northSounde, Constantes.MAIN_PLAYER.transform, Constantes.MAIN_PLAYER.GetComponent<Rigidbody>());
             northSounde.start();
         }
